@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-app.use('/', productsRoutes)
+app.use('/api/', productsRoutes)
 
 app.get("/", (req, res) => {
   res.send("¡Bienvenido a la API!");
