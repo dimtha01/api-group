@@ -1,0 +1,143 @@
+# Resumen completo de Git y GitHub
+
+## 1. Configuración inicial del repositorio
+
+### Inicializar Git
+git init
+
+### Conectar el repositorio local con GitHub
+git remote add origin https://github.com/tu-usuario/tu-repositorio.git 
+
+### Crear un archivo .gitignore
+node_modules/
+.env
+.DS_Store
+
+### Realizar el primer commit
+git add .
+git commit -m "Initial commit"
+git push -u origin main
+
+---
+
+## 2. Creación de ramas
+
+### Crear una nueva rama
+git checkout -b <nombre-de-la-rama>
+
+Ejemplo:
+git checkout -b setup/project-structure
+
+### Listar todas las ramas
+git branch
+
+### Cambiar entre ramas
+git checkout <nombre-de-la-rama>
+
+Ejemplo:
+git checkout main
+
+### Subir una rama al repositorio remoto
+git push origin <nombre-de-la-rama>
+
+Ejemplo:
+git push origin feature/multer
+
+### Eliminar una rama
+- Localmente:
+  git branch -d <nombre-de-la-rama>
+
+- Remotamente:
+  git push origin --delete <nombre-de-la-rama>
+
+---
+
+## 3. Flujo de trabajo con ramas
+
+### Trabajar en una rama específica
+Cada miembro del equipo debe trabajar en su propia rama (por ejemplo, feature/multer).
+
+### Realizar commits regulares
+git add .
+git commit -m "feat(multer): agregar configuración inicial"
+
+### Subir cambios al repositorio remoto
+git push origin feature/multer
+
+### Crear un Pull Request (PR)
+En GitHub:
+1. Ve al repositorio.
+2. Haz clic en "Compare & pull request".
+3. Selecciona la rama base (main o develop) y la rama de comparación (por ejemplo, feature/multer).
+4. Asigna revisores y crea el PR.
+
+### Revisar y aprobar el PR
+- Revisa los cambios en GitHub.
+- Si todo está correcto, aprueba el PR y fúsionalo con la rama base.
+
+### Fusionar una rama
+git checkout main
+git merge feature/multer
+git push origin main
+
+---
+
+## 4. Configurar Branch Protection Rules
+
+Para proteger la rama main o develop en GitHub:
+
+1. Ve a Settings > Branches en tu repositorio.
+2. Añade una regla de protección para main o develop.
+3. Activa las siguientes opciones:
+   - Require a pull request before merging.
+   - Require approvals (define cuántas aprobaciones se necesitan).
+   - Include administrators (opcional).
+4. Guarda los cambios.
+
+---
+
+## 5. Estructura del proyecto
+
+### Crear la estructura inicial
+/proyecto-api
+│
+├── /src
+│   ├── /controllers       # Lógica de los controladores
+│   ├── /routes            # Rutas de la API
+│   ├── /middleware        # Middlewares (Multer, JWT, etc.)
+│   ├── /models            # Modelos de datos (si usas una base de datos)
+│   ├── /utils             # Funciones auxiliares
+│   └── app.js             # Archivo principal de la aplicación
+│
+├── .env                   # Variables de entorno
+├── .gitignore             # Archivos y carpetas a ignorar en Git
+├── package.json           # Dependencias y scripts del proyecto
+└── README.md              # Documentación del proyecto
+
+### Inicializar package.json
+npm init -y
+
+### Instalar dependencias básicas
+npm install express dotenv
+
+### Crear un archivo .env
+PORT=3000
+
+### Crear el archivo principal (app.js)
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a la API!');
+});
+
+// Iniciar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo
